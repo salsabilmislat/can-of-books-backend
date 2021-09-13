@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongoose = require("mongoose");
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
@@ -15,15 +16,23 @@ mongoose.connect(MONGO_URL);
 
 const getIndex = require('./controllers/index.controller');
 
-const {getBooks}=require('./controllers/book.controllers');
+const {
+    getBooks,
+    creatBooks,
+    deleteBook
+} = require('./controllers/book.controllers');
 
-const seedBook=require('./helper/bookSeed.seed');
+const seedBook = require('./helper/bookSeed.seed');
 
 // seedBook();
 
 app.get('/', getIndex);
 
-app.get('/books',getBooks);
+app.get('/books', getBooks);
+
+app.post('/books', creatBooks);
+
+app.delete('/books/:book_id', deleteBook);
 
 // app.get('/test', (request, response) => {
 
