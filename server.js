@@ -11,7 +11,7 @@ const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 const DB_NAME = process.env.DB_NAME;
 
-mongoose.connect(`${MONGO_URL}/${DB_NAME}`);
+mongoose.connect(MONGO_URL);
 
 const getIndex = require('./controllers/index.controller');
 
