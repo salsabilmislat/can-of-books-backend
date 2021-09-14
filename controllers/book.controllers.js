@@ -15,39 +15,48 @@ const getBooks = (request, response) => {
 
 };
 const creatBooks = (request, response) => {
-try {  
-  const { title, description, status, email } = request.body;  
-  const newBook = new bookModel({
-    title, description, status, email
-  })
-  newBook.save()
-  response.json(newBook)
-} catch (error) {
-  
-  response.send(error)
-}
-}
+  try {
+    const { title, description, status, email } = request.body;
+    const newBook = new bookModel({
+      title, description, status, email
+    })
+    newBook.save()
+    response.json(newBook)
+  } catch (error) {
+
+    response.send(error)
+  }
+};
 
 const deleteBook = (request, response) => {
-  
-    
-    const bookId = request.params.book_id
-    bookModel.deleteOne({_id: bookId}, (error, deletedData)=>{
-      if (error) {
-        
-        response.send(error)
-      }
-      response.json(deletedData)
-      console.log(request.params)
-    })
-    
- 
 
+  const bookId = request.params.book_id
+  bookModel.deleteOne({ _id: bookId }, (error, deletedData) => {
+    if (error) {
+
+      response.send(error)
+    }
+    response.json(deletedData)
+    console.log(request.params)
+  })
+};
+
+const updateBook = (request, response) => {
+
+  const { title, description, status, email } = request.body;
+ 
+  const bookId = request.params.book_id;
+
+  bookModel.findByIdAndUpdate({ _id: bookId }, { title, description, status, email }, { new: true }, (error, updatedBookData) => {
+   
+    response.json(updatedBookData);
+
+  });
 }
 
 module.exports = {
   getBooks,
   creatBooks,
-  deleteBook
-
+  deleteBook,
+  updateBook
 }
