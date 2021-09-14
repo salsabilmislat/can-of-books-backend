@@ -19,7 +19,8 @@ const getIndex = require('./controllers/index.controller');
 const {
     getBooks,
     creatBooks,
-    deleteBook
+    deleteBook,
+    updateBook
 } = require('./controllers/book.controllers');
 
 const seedBook = require('./helper/bookSeed.seed');
@@ -33,6 +34,8 @@ app.get('/books', getBooks);
 app.post('/books', creatBooks);
 
 app.delete('/books/:book_id', deleteBook);
+
+app.put('/books/:book_id',updateBook);
 
 // app.get('/test', (request, response) => {
 
