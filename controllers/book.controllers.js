@@ -5,13 +5,16 @@ const { request, response } = require('express');
 const bookModel = require('../models/book.model');
 
 const getBooks = (request, response) => {
-
-  bookModel.find((error, booksData) => {
-    if (error) {
-      response.send(error);
-    }
-    response.json(booksData)
-  });
+  try {
+    bookModel.find((error, booksData) => {
+      if (error) {
+        response.send(error);
+      }
+      response.json(booksData)
+    });
+  } catch (error) {
+    response.send(error);
+  }
 
 };
 const creatBooks = (request, response) => {
@@ -44,11 +47,11 @@ const deleteBook = (request, response) => {
 const updateBook = (request, response) => {
 
   const { title, description, status, email } = request.body;
- 
+
   const bookId = request.params.book_id;
 
   bookModel.findByIdAndUpdate({ _id: bookId }, { title, description, status, email }, { new: true }, (error, updatedBookData) => {
-   
+
     response.json(updatedBookData);
 
   });
