@@ -6,7 +6,7 @@ const bookModel = require('../models/book.model');
 
 const getBooks = (request, response) => {
   try {
-    bookModel.find((error, booksData) => {
+    bookModel.find({ email: request.query.email },(error, booksData) => {
       if (error) {
         response.send(error);
       }
